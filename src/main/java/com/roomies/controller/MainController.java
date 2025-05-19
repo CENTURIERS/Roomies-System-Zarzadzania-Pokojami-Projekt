@@ -1,4 +1,4 @@
-package com.roomies;
+package com.roomies.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,5 +1,6 @@
 package com.roomies.util;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -9,7 +10,7 @@ public class HibernateUtil {
     static {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
+        } catch (HibernateException ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
