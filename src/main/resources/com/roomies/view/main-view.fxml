@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="208.0" prefWidth="447.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.MainController">
+<VBox alignment="CENTER" prefHeight="208.0" prefWidth="447.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.MainController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>

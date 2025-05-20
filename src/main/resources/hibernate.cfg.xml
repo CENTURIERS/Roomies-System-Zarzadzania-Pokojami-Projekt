@@ -12,5 +12,12 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+
+        <mapping class="com.roomies.model.RodzajPokoju"/>
+        <mapping class="com.roomies.model.Lokalizacja"/>
+        <mapping class="com.roomies.model.Klient"/>
+        <mapping class="com.roomies.model.Platnosc"/>
+        <mapping class="com.roomies.model.Pokoj"/>
+        <mapping class="com.roomies.model.Wynajem"/>
     </session-factory>
 </hibernate-configuration>
