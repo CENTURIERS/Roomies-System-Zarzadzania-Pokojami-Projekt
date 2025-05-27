@@ -4,6 +4,7 @@ module com.roomies {
     requires org.hibernate.orm.core;
     requires java.naming;
     requires jakarta.persistence;
+    requires java.sql;
     opens com.roomies.controller to javafx.fxml;
     opens com.roomies.model to org.hibernate.orm.core;
     exports com.roomies;
