@@ -1,0 +1,219 @@
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #f8f9fa;
+}
+
+.top-bar {
+    -fx-background-color: #f7f9fa;
+    -fx-padding: 8px 20px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #dfe3e6;
+}
+
+.top-bar .button {
+    -fx-font-size: 12px;
+    -fx-padding: 6px 15px;
+    -fx-background-radius: 4px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #5a6268;
+    -fx-border-color: #adb5bd;
+    -fx-border-width: 1px;
+    -fx-font-family: "Segoe UI Semibold", Arial, sans-serif;
+    -fx-alignment: CENTER;
+}
+
+.top-bar .button:hover {
+    -fx-background-color: #e9ecef;
+    -fx-border-color: #90989e;
+}
+
+.left-menu {
+    -fx-background-color: #e9ecef;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 3, 0);
+}
+
+.left-menu .menu-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 15px 0;
+    -fx-alignment: center;
+}
+
+.left-menu .accordion {
+    -fx-background-color: transparent;
+}
+
+.left-menu .titled-pane {
+    -fx-background-color: transparent;
+}
+
+.left-menu .titled-pane > .title {
+    -fx-background-color: #fdfdfe;
+    -fx-border-color: transparent transparent #dde2e6 transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 10px 12px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #34495e;
+}
+
+.left-menu .titled-pane:first-child > .title {
+    -fx-border-color: #dde2e6 transparent #dde2e6 transparent;
+    -fx-border-width: 1px 0 1px 0;
+}
+
+.left-menu .titled-pane > .title:hover {
+    -fx-background-color: #f7f9fa;
+}
+
+.left-menu .titled-pane > .title > .arrow-button .arrow {
+    -fx-background-color: #50667a;
+}
+
+.left-menu .titled-pane .content {
+    -fx-background-color: #fdfdfe;
+    -fx-padding: 10px 10px 10px 15px;
+    -fx-border-color: transparent transparent #dde2e6 transparent;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.left-menu .titled-pane:expanded .content {
+    -fx-border-color: transparent transparent #dde2e6 transparent;
+}
+
+.left-menu .titled-pane:last-of-type:expanded .content {
+    -fx-border-width: 0;
+}
+
+.left-menu .radio-button, .left-menu .check-box {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #495057;
+    -fx-padding: 3px 0;
+}
+
+.left-menu .filter-buttons-container {
+    -fx-padding-top: 15px;
+}
+
+.left-menu .button#wyczyscFiltryButton {
+    -fx-font-size: 13px;
+    -fx-pref-height: 38px;
+    -fx-background-radius: 4px;
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #495057;
+    -fx-alignment: CENTER;
+}
+.left-menu .button#wyczyscFiltryButton:hover {
+    -fx-background-color: #ced4da;
+}
+
+.left-menu .button#zastosujFiltryButton {
+    -fx-font-size: 13px;
+    -fx-pref-height: 38px;
+    -fx-background-radius: 4px;
+    -fx-background-color: #C1A37E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+.left-menu .button#zastosujFiltryButton:hover {
+    -fx-background-color: derive(#C1A37E, -10%);
+}
+
+.content-area {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+}
+
+.pokoj-karta {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 12, 0.0, 3, 4);
+}
+
+.pokoj-karta:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 15, 0.0, 5, 6);
+    -fx-border-color: #c0c0c0;
+}
+
+.pokoj-karta ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 1, 1);
+}
+
+.pokoj-karta-nazwa {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0;
+    -fx-alignment: center;
+}
+
+.pokoj-karta-info {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #5a6268;
+    -fx-alignment: center-left;
+}
+
+.pokoj-karta-dostepnosc {
+    -fx-font-size: 12.5px;
+    -fx-font-weight: normal;
+    -fx-text-fill: #5a6268;
+}
+
+.status-dostepny {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
+}
+.status-niedostepny {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+}
+
+.pokoj-karta-cena {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #C1A37E;
+    -fx-padding: 2px 0 5px 0;
+    -fx-alignment: center-left;
+}
+
+.pokoj-karta-button {
+    -fx-font-size: 13px;
+    -fx-background-color: #C1A37E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 10px;
+    -fx-alignment: CENTER;
+}
+
+.pokoj-karta-button:hover {
+    -fx-background-color: derive(#C1A37E, -10%);
+}
+
+.scroll-pane {
+    -fx-background-color: white;
+    -fx-fit-to-width: true;
+}
+.scroll-pane .viewport {
+    -fx-background-color: white;
+}
+
+.scroll-pane .scroll-bar:vertical, .scroll-pane .scroll-bar:horizontal{
+    -fx-background-color:transparent;
+}
+.scroll-pane .increment-button ,
+.scroll-pane .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+}
+.scroll-pane .thumb {
+    -fx-background-color: #ced4da;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1em;
+}

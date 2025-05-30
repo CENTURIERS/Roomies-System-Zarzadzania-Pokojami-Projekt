@@ -74,11 +74,11 @@ public class Wynajem {
         this.dataRozpoczecia = dataRozpoczecia;
     }
 
-    public LocalDate getDataZakoczenia() {
+    public LocalDate getDataZakonczenia() {
         return dataZakoczenia;
     }
 
-    public void setDataZakoczenia(LocalDate dataZakoczenia) {
+    public void setDataZakonczenia(LocalDate dataZakoczenia) {
         this.dataZakoczenia = dataZakoczenia;
     }
 
@@ -119,8 +119,8 @@ public class Wynajem {
         }
 
         String dataZakonczeniaInfo = "Brak informacji";
-        if (getDataZakoczenia() != null) {
-            dataZakonczeniaInfo = getDataZakoczenia().toString();
+        if (getDataZakonczenia() != null) {
+            dataZakonczeniaInfo = getDataZakonczenia().toString();
         }
 
         String platnoscInfo = "Brak informacji";

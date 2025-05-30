@@ -6,6 +6,6 @@ module com.roomies {
     requires jakarta.persistence;
     requires java.sql;
     opens com.roomies.controller to javafx.fxml;
-    opens com.roomies.model to org.hibernate.orm.core;
+    opens com.roomies.model to org.hibernate.orm.core, javafx.base;
     exports com.roomies;
 }
