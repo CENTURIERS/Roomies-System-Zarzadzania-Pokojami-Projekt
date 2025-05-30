@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.StackPane?>
+<VBox fx:id="kartaPokojuKontener" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="210.0" spacing="5.0" styleClass="pokoj-karta" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.PokojItemController">
+   <children>
+      <StackPane VBox.vgrow="NEVER">
+         <children>
+            <ImageView fx:id="zdjeciePokojuImageView" fitHeight="140.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/placeholder_400x300.png" />
+               </image>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </StackPane>
+
+      <Label fx:id="nazwaPokojuLabel" alignment="CENTER" maxWidth="Infinity" styleClass="pokoj-karta-nazwa" text="Elegancki Pokój Jednoosobowy z Widokiem" wrapText="true" />
+      <Label fx:id="rodzajPokojuLabel" styleClass="pokoj-karta-info" text="Rodzaj: Jednoosobowy Superior" />
+      <Label fx:id="lokalizacjaPokojuLabel" styleClass="pokoj-karta-info" text="Lokalizacja: Ciche Skrzydło, Piętro 3" />
+      <Label fx:id="cenaPokojuLabel" styleClass="pokoj-karta-cena" text="150.00 zł / doba" />
+      <Label fx:id="dostepnoscLabel" styleClass="pokoj-karta-dostepnosc" text="Status: Dostępny" />
+       <Region VBox.vgrow="ALWAYS" />
+       <Button fx:id="zobaczSzczegolyButton" maxWidth="Infinity" style="-fx-margin-top: 10px;" text="Zobacz Szczegóły" />
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

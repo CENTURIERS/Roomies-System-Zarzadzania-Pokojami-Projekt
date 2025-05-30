@@ -1,7 +1,7 @@
 package com.roomies.model;
 
 import jakarta.persistence.*;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +30,12 @@ public class Pokoj {
 
     @Column(name = "nazwa", nullable = false, length = 255)
     private String nazwa;
+
+    @Column(name = "cena_za_dobe", nullable = false, precision = 10, scale = 2)
+    private BigDecimal cenaZaDobe;
+
+    @Column(name = "sciezka_zdjecia", length = 255) // Może być null
+    private String sciezkaZdjecia;
 
     public Pokoj() {
 
@@ -88,6 +94,22 @@ public class Pokoj {
 
     public void setWynajmy(List<Wynajem> wynajmy) {
         this.wynajmy = wynajmy;
+    }
+
+    public BigDecimal getCenaZaDobe() {
+        return cenaZaDobe;
+    }
+
+    public void setCenaZaDobe(BigDecimal cenaZaDobe) {
+        this.cenaZaDobe = cenaZaDobe;
+    }
+
+    public String getSciezkaZdjecia() {
+        return sciezkaZdjecia;
+    }
+
+    public void setSciezkaZdjecia(String sciezkaZdjecia) {
+        this.sciezkaZdjecia = sciezkaZdjecia;
     }
 
     @Override
