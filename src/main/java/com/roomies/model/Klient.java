@@ -20,17 +20,26 @@ public class Klient {
     @Column(name = "nazwisko", length = 255, nullable = false)
     private String nazwisko;
 
+    @Column(name = "email", length = 255, unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "telefon", length = 20, nullable = true)
+    private String telefon;
+
     @Column(name = "ulica", length = 255, nullable = false)
     private String ulica;
 
-    @Column(name = "numer_budynku", nullable = false)
-    private int numerBudynku;
+    @Column(name = "numer_budynku",length = 10, nullable = false)
+    private String numerBudynku;
 
     @Column(name = "pesel", length = 11, unique = true, nullable = false)
     private String pesel;
 
     @Column(name = "czy_aktywny")
     private boolean czyAktywny;
+
+    @Column(name = "haslo", length = 255, nullable = false)
+    private String haslo;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "klient", cascade = CascadeType.ALL)
     private List<Wynajem> wynajmy = new ArrayList<>();
@@ -39,13 +48,16 @@ public class Klient {
 
     }
 
-    public Klient(String imie, String nazwisko, String ulica, int numerBudynku, String pesel, boolean czyAktywny) {
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.ulica = ulica;
-        this.numerBudynku = numerBudynku;
+    public Klient(String pesel, String numerBudynku, String ulica, String telefon, String email, String nazwisko, String imie, String haslo) {
         this.pesel = pesel;
-        this.czyAktywny = czyAktywny;
+        this.numerBudynku = numerBudynku;
+        this.ulica = ulica;
+        this.telefon = telefon;
+        this.email = email;
+        this.nazwisko = nazwisko;
+        this.imie = imie;
+        this.haslo = haslo;
+        this.czyAktywny = true;
     }
 
     public Integer getIdKlienta() {
@@ -80,14 +92,6 @@ public class Klient {
         this.ulica = ulica;
     }
 
-    public int getNumerBudynku() {
-        return numerBudynku;
-    }
-
-    public void setNumerBudynku(int numerBudynku) {
-        this.numerBudynku = numerBudynku;
-    }
-
     public String getPesel() {
         return pesel;
     }
@@ -112,6 +116,34 @@ public class Klient {
         this.wynajmy = wynajmy;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefon() {
+        return telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
+
+    public void setNumerBudynku(String numerBudynku) {
+        this.numerBudynku = numerBudynku;
+    }
+
+    public String getHaslo() {
+        return haslo;
+    }
+
+    public void setHaslo(String haslo) {
+        this.haslo = haslo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -130,12 +162,16 @@ public class Klient {
 
     @Override
     public String toString() {
-        return "\nKlient:" +
-                "\n  ID: " + getIdKlienta() +
-                "\n  Imię: " + getImie() +
-                "\n  Nazwisko: " + getNazwisko() +
-                "\n  Ulica: " + getUlica() +
-                "\n  Numer budynku: " + getNumerBudynku() +
-                "\n  PESEL: " + getPesel();
+        return "Klient{" +
+                "idKlienta=" + idKlienta +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", email='" + email + '\'' +
+                ", telefon='" + (telefon != null ? telefon : "brak") + '\'' +
+                ", ulica='" + ulica + '\'' +
+                ", numerBudynku='" + numerBudynku + '\'' +
+                ", pesel='" + pesel + '\'' +
+                ", czyAktywny=" + czyAktywny +
+                '}';
     }
 }

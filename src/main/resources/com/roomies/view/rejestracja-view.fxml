@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="rejestracjaPane" alignment="CENTER" spacing="18.0" styleClass="dialog-pane" stylesheets="@../../../css/css.css" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.RejestracjaController">
+    <padding>
+        <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+    </padding>
+    <children>
+        <Text text="Rejestracja Nowego Konta" styleClass="dialog-title" textAlignment="CENTER" />
+
+        <GridPane hgap="12.0" vgap="10.0" styleClass="form-grid" alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="130.0" prefWidth="140.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="240.0" prefWidth="260.0"/>
+            </columnConstraints>
+
+            <Label styleClass="form-label" text="Imię:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="imieField" promptText="np. Jan" styleClass="form-input" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Nazwisko:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="nazwiskoField" promptText="np. Kowalski" styleClass="form-input" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Adres email:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="emailField" promptText="example@domain.com" styleClass="form-input" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Hasło:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <PasswordField fx:id="hasloField" promptText="Min. 6 znaków" styleClass="form-input" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Powtórz hasło:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <PasswordField fx:id="powtorzHasloField" promptText="Potwierdź hasło" styleClass="form-input" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Telefon:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <TextField fx:id="telefonField" promptText="Opcjonalnie (np. 123-456-789)" styleClass="form-input" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Ulica:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <TextField fx:id="ulicaField" promptText="np. Słoneczna" styleClass="form-input" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Numer budynku/lokalu:" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <TextField fx:id="numerBudynkuField" promptText="np. 22A lub 10/5" styleClass="form-input" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="PESEL:" GridPane.rowIndex="8" GridPane.columnIndex="0" />
+            <TextField fx:id="peselField" promptText="11 cyfr" styleClass="form-input" GridPane.rowIndex="8" GridPane.columnIndex="1" />
+        </GridPane>
+
+        <Label fx:id="errorLabel" styleClass="error-label" managed="false" visible="false" wrapText="true" maxWidth="Infinity"/>
+
+        <HBox alignment="CENTER" spacing="15.0" styleClass="dialog-buttons-hbox">
+            <Button fx:id="anulujButton" mnemonicParsing="false" onAction="#handleAnulujButton" styleClass="dialog-button-secondary" text="Anuluj" />
+            <Button fx:id="zarejestrujButton" mnemonicParsing="false" onAction="#handleZarejestrujButton" styleClass="dialog-button-primary" text="Zarejestruj się" />
+        </HBox>
+    </children>
+</VBox>
