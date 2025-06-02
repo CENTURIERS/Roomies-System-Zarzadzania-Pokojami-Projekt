@@ -2,13 +2,18 @@ package com.roomies.controller;
 
 import com.roomies.model.Pokoj;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -98,11 +103,11 @@ public class PokojItemController {
         }
 
         if (imageToSet == null) {
-            try (InputStream is = getClass().getResourceAsStream("@../../../images/placeholder_400x300.png")) {
+            try (InputStream is = getClass().getResourceAsStream("/images/placeholder_400x300.png")) {
                 if (is != null) {
                     imageToSet = new Image(is);
                 } else {
-                    System.out.println("KRYTYCZNY BŁĄD: Nie znaleziono domyślnego obrazka placeholder: " + "@../../../images/placeholder_400x300.png");
+                    System.out.println("KRYTYCZNY BŁĄD: Nie znaleziono domyślnego obrazka placeholder: " + "/images/placeholder_400x300.png");
                 }
             } catch (Exception e) {
                 System.out.println("Błąd podczas ładowania domyślnego obrazka placeholder: " + e.getMessage());
@@ -113,22 +118,55 @@ public class PokojItemController {
 
     @FXML
     public void initialize() {
-         if (zobaczSzczegolyButton != null) {
-             zobaczSzczegolyButton.setOnAction(event -> handleZobaczSzczegoly());
-         }
+        if (zobaczSzczegolyButton != null) {
+            zobaczSzczegolyButton.setOnAction(event -> handleZobaczSzczegoly());
+        }
     }
 
     @FXML
     private void handleZobaczSzczegoly() {
-        if (pokojObiekt != null) {
-            System.out.println("Kliknięto 'Zobacz Szczegóły' dla pokoju: " + pokojObiekt.getNazwa());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Szczegóły Pokoju");
-            alert.setHeaderText("Wybrano pokój: " + pokojObiekt.getNazwa());
-            alert.setContentText("ID Pokoju: " + pokojObiekt.getId_pokoju() + "\n" +
-                    "Cena: " + (pokojObiekt.getCenaZaDobe() != null ? pokojObiekt.getCenaZaDobe().toString() + " zł" : "Brak") +
-                    "\nZdjęcie: " + (pokojObiekt.getSciezkaZdjecia() != null ? pokojObiekt.getSciezkaZdjecia() : "Brak"));
+        if (pokojObiekt == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Brak danych");
+            alert.setHeaderText(null);
+            alert.setContentText("Nie można wyświetlić szczegółów, brak danych pokoju.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/roomies/view/szczegoly-pokoju-view.fxml"));
+
+            Parent root = loader.load();
+
+            SzczegolyPokojuController szczgolyController = loader.getController();
+            if (szczgolyController == null) {
+                System.out.println("KRYTYCZNY BŁĄD: Nie udało się pobrać kontrolera dla szczegoly-pokoju-view.fxml");
+                pokazAlert("Błąd Aplikacji", "Błąd Wewnętrzny", "Nie można załadować komponentów okna szczegółów.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            szczgolyController.wyswietlSzczegoly(this.pokojObiekt);
+
+            Stage detailsStage = new Stage();
+            detailsStage.setTitle("Szczegoly Pokoju - " + (pokojObiekt.getNazwa() != null ? pokojObiekt.getNazwa() : ""));
+            detailsStage.setScene(new Scene(root));
+            detailsStage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd aplikacji");
+            alert.setHeaderText(null);
+            alert.setContentText("Nie można otworzyć okna ze szczegółami pokoju");
             alert.showAndWait();
         }
+    }
+
+    private void pokazAlert(String tytul, String naglowek, String wiadomosc, Alert.AlertType typAlerta) {
+        Alert alert = new Alert(typAlerta);
+        alert.setTitle(tytul);
+        alert.setHeaderText(naglowek);
+        alert.setContentText(wiadomosc);
+        alert.showAndWait();
     }
 }

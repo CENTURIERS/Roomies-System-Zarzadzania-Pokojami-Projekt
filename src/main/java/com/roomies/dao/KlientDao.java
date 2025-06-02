@@ -66,6 +66,25 @@ public class KlientDao implements  GenericDao<Klient, Integer> {
         }
     }
 
+    public Optional<Klient> findByEmail(String email) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Query<Klient> query = session.createQuery("FROM Klient k WHERE k.email = :emailParam", Klient.class);
+            query.setParameter("emailParam", email);
+            Klient klient = query.uniqueResult();
+            transaction.commit();
+            return Optional.ofNullable(klient);
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.err.println("Błąd podczas wyszukiwania klienta po email: " + email + " - " + e.getMessage());
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
     @Override
     public Optional<Klient> findById(Integer id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

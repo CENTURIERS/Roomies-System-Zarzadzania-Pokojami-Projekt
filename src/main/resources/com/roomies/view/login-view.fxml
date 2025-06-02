@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="loginPane" alignment="CENTER" spacing="20.0" styleClass="dialog-pane" stylesheets="@../../../css/css.css" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.LoginController">
+    <padding>
+        <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+    </padding>
+    <children>
+        <Text text="Logowanie do Roomies" styleClass="dialog-title" textAlignment="CENTER" />
+
+        <VBox spacing="10.0" alignment="CENTER_LEFT" maxWidth="300.0">
+            <Label styleClass="form-label" text="Email:" />
+            <TextField fx:id="emailField" promptText="Wprowadź email" styleClass="form-input" />
+
+            <Label styleClass="form-label" text="Hasło:">
+                <VBox.margin>
+                    <Insets top="10.0" />
+                </VBox.margin>
+            </Label>
+            <PasswordField fx:id="passwordField" promptText="Wprowadź hasło" styleClass="form-input" />
+        </VBox>
+
+        <Label fx:id="errorLabel" styleClass="error-label" managed="false" visible="false" wrapText="true" maxWidth="Infinity" />
+
+        <VBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" spacing="10.0" maxWidth="300.0">
+                <Button fx:id="anulujButton" mnemonicParsing="false" onAction="#handleAnulujButton" styleClass="dialog-button-secondary" text="Anuluj" HBox.hgrow="NEVER"/>
+                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButton" styleClass="dialog-button-primary" text="Zaloguj" HBox.hgrow="NEVER"/>
+            </HBox>
+            <Hyperlink fx:id="rejestracjaLink" onAction="#handleRejestracjaLink" text="Nie masz konta? Zarejestruj się" style="-fx-font-size: 12.5px;">
+                <VBox.margin>
+                    <Insets top="10.0" />
+                </VBox.margin>
+            </Hyperlink>
+        </VBox>
+    </children>
+</VBox>

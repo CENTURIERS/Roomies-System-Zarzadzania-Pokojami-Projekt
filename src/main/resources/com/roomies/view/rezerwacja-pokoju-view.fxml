@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="dialog-pane-scroll" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.RezerwacjaPokojuController">
+   <content>
+      <VBox fx:id="rezerwacjaKlientDialogPane" alignment="TOP_CENTER" spacing="15.0" styleClass="dialog-content-vbox">
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="20.0" />
+         </padding>
+         <children>
+            <Text text="Rezerwacja Pokoju i Rejestracja" styleClass="dialog-title" textAlignment="CENTER" wrappingWidth="500"/>
+
+            <Label fx:id="nazwaPokojuLabelInfo" styleClass="form-value-bold" text="Rezerwujesz: [Nazwa Pokoju]" textAlignment="CENTER"/>
+            <Label fx:id="cenaZaDobeInfoLabel" styleClass="form-value" text="Cena: [Cena] / doba" textAlignment="CENTER" />
+
+            <HBox spacing="30.0" alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+               <children>
+                  <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Dane Rezerwującego i do Konta" styleClass="form-section-title"/>
+                        <GridPane hgap="10.0" vgap="8.0" styleClass="form-grid">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" minWidth="100.0" prefWidth="110.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="200.0"/>
+                           </columnConstraints>
+
+                           <Label styleClass="form-label" text="Imię:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                           <TextField fx:id="imieField" promptText="Jan" styleClass="form-input" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Nazwisko:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                           <TextField fx:id="nazwiskoField" promptText="Kowalski" styleClass="form-input" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                           <TextField fx:id="emailField" promptText="example@gmail.com" styleClass="form-input" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Hasło:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                           <PasswordField fx:id="hasloField" promptText="Min. 6 znaków" styleClass="form-input" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Telefon:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                           <TextField fx:id="telefonField" promptText="Opcjonalnie" styleClass="form-input" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Ulica:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                           <TextField fx:id="ulicaField" promptText="Kwiatowa" styleClass="form-input" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Numer budynku:" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+                           <TextField fx:id="numerBudynkuField" promptText="22 lub 22A" styleClass="form-input" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="PESEL:" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+                           <TextField fx:id="peselField" promptText="11 cyfr" styleClass="form-input" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+                        </GridPane>
+                     </children>
+                  </VBox>
+
+                  <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Okres Rezerwacji" styleClass="form-section-title" />
+                        <GridPane hgap="10.0" vgap="8.0" styleClass="form-grid">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="RIGHT" minWidth="100.0" prefWidth="110.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="200.0"/>
+                           </columnConstraints>
+                           <Label styleClass="form-label" text="Data rozpoczęcia:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                           <DatePicker fx:id="dataRozpoczeciaPicker" styleClass="form-datepicker" prefWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Data zakończenia:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                           <DatePicker fx:id="dataZakonczeniaPicker" styleClass="form-datepicker" prefWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label" text="Liczba dni:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                           <Label fx:id="liczbaDniLabel" styleClass="form-value" text="-" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                           <Label styleClass="form-label-total" text="Całkowity koszt:" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" alignment="CENTER_LEFT">
+                              <GridPane.margin>
+                                 <Insets top="10.0" />
+                              </GridPane.margin>
+                           </Label>
+                           <Label fx:id="calkowityKosztLabel" styleClass="form-total-price-value" text="0.00 zł" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" alignment="CENTER_LEFT">
+                              <GridPane.margin>
+                                 <Insets left="20.0" />
+                              </GridPane.margin>
+                           </Label>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <Label text="(Rezerwując pokój zgadzasz się na utworzenie konta i akceptujesz regulamin)" style="-fx-font-size: 11px; -fx-text-fill: #6c757d; -fx-padding: 15 0 5 0;" wrapText="true" textAlignment="CENTER" maxWidth="Infinity"/>
+
+            <Label fx:id="errorLabel" styleClass="error-label" managed="false" visible="false" wrapText="true" maxWidth="Infinity"/>
+
+            <HBox alignment="CENTER" spacing="15.0" styleClass="dialog-buttons-hbox">
+               <Button fx:id="anulujButton" mnemonicParsing="false" onAction="#handleAnulujButton" styleClass="dialog-button-secondary" text="Anuluj" />
+               <Button fx:id="rezerwujZarejestrujButton" mnemonicParsing="false" onAction="#handleRezerwujZarejestrujButton" styleClass="dialog-button-primary" text="Rezerwuj i Utwórz Konto" />
+            </HBox>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
