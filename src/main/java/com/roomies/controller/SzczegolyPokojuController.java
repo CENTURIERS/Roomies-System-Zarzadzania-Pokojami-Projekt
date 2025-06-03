@@ -153,11 +153,6 @@ public class SzczegolyPokojuController {
         if(stage != null) {
             stage.close();
         }
-        PokojDao pokojDao = new PokojDao();
-        List<Pokoj> wszystkiePokoje = new ArrayList<>();
-        wszystkiePokoje = pokojDao.findAll();
-        MainController mc = new MainController();
-        mc.wyswietlPokojeNaKartach(wszystkiePokoje);
     }
 
     @FXML
