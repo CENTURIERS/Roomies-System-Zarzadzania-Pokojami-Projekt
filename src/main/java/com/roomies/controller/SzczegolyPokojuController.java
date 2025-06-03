@@ -3,6 +3,7 @@ package com.roomies.controller;
 import com.roomies.dao.PokojDao;
 import com.roomies.model.Pokoj;
 import com.roomies.util.UserSession;
+import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -150,6 +153,11 @@ public class SzczegolyPokojuController {
         if(stage != null) {
             stage.close();
         }
+        PokojDao pokojDao = new PokojDao();
+        List<Pokoj> wszystkiePokoje = new ArrayList<>();
+        wszystkiePokoje = pokojDao.findAll();
+        MainController mc = new MainController();
+        mc.wyswietlPokojeNaKartach(wszystkiePokoje);
     }
 
     @FXML

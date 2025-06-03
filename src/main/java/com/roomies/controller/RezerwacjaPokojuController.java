@@ -95,7 +95,6 @@ public class RezerwacjaPokojuController {
         dataRozpoczeciaPicker.setValue(LocalDate.now());
         dataZakonczeniaPicker.setValue(LocalDate.now().plusDays(1));
 
-        wypelnijDaneKlientaJesliZalogowany();
     }
 
     public void initData(Pokoj pokoj, SzczegolyPokojuController szczegolyController) {
@@ -111,57 +110,8 @@ public class RezerwacjaPokojuController {
                 rezerwujZarejestrujButton.setDisable(true);
             }
         }
-        wypelnijDaneKlientaJesliZalogowany();
         przeliczKoszt();
     }
-
-    private void wypelnijDaneKlientaJesliZalogowany() {
-        Klient zalogowany = UserSession.getInstance().getZalogowanyKlient();
-        boolean jestZalogowany = UserSession.getInstance().isUserLoggedIn();
-
-        if (jestZalogowany && zalogowany != null) {
-            imieField.setText(zalogowany.getImie());
-            nazwiskoField.setText(zalogowany.getNazwisko());
-            emailField.setText(zalogowany.getEmail());
-            peselField.setText(zalogowany.getPesel());
-            ulicaField.setText(zalogowany.getUlica());
-            numerBudynkuField.setText(zalogowany.getNumerBudynku());
-            if (zalogowany.getTelefon() != null) {
-                telefonField.setText(zalogowany.getTelefon());
-            }
-
-            imieField.setDisable(true);
-            nazwiskoField.setDisable(true);
-            emailField.setDisable(true);
-            peselField.setDisable(true);
-            ulicaField.setDisable(true);
-            numerBudynkuField.setDisable(true);
-            telefonField.setDisable(true);
-
-            hasloField.clear();
-            hasloField.setDisable(true);
-            hasloField.getParent().setVisible(false);
-            hasloField.getParent().setManaged(false);
-
-            rezerwujZarejestrujButton.setText("Potwierdź Rezerwację");
-        } else {
-            imieField.setDisable(false);
-            nazwiskoField.setDisable(false);
-            emailField.setDisable(false);
-            peselField.setDisable(false);
-            ulicaField.setDisable(false);
-            numerBudynkuField.setDisable(false);
-            telefonField.setDisable(false);
-
-            hasloField.setDisable(false);
-            if(hasloField.getParent() != null){
-                hasloField.getParent().setVisible(true);
-                hasloField.getParent().setManaged(true);
-            }
-            rezerwujZarejestrujButton.setText("Rezerwuj i Utwórz Konto");
-        }
-    }
-
 
     private void przeliczKoszt() {
         LocalDate start = dataRozpoczeciaPicker.getValue();
