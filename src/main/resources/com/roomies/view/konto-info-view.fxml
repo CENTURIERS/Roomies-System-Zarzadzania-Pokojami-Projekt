@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox styleClass="konto-info-container" spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.KontoInfoController">
+    <padding>
+        <Insets top="25.0" right="30.0" bottom="30.0" left="30.0" />
+    </padding>
+    <children>
+        <Text text="Dane Konta" styleClass="form-section-title" VBox.vgrow="NEVER"/>
+        <GridPane hgap="10.0" vgap="12.0" styleClass="konto-info-grid">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="120.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="250.0" prefWidth="300.0"/>
+            </columnConstraints>
+
+            <Label text="Imię:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <Label fx:id="imieLabel" styleClass="form-value-bold" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Nazwisko:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <Label fx:id="nazwiskoLabel" styleClass="form-value-bold" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Adres email:" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <Label fx:id="emailLabel" styleClass="form-value" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label text="Telefon:" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <Label fx:id="telefonLabel" styleClass="form-value" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <Label text="Ulica:" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <Label fx:id="ulicaLabel" styleClass="form-value" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+            <Label text="Numer budynku:" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <Label fx:id="numerBudynkuLabel" styleClass="form-value" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+            <Label text="PESEL:" styleClass="form-label" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <Label fx:id="peselLabel" styleClass="form-value" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+
+            <Label text="Status konta:" styleClass="form-label" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <Label fx:id="statusKontaLabel" styleClass="form-value" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+
+        </GridPane>
+    </children>
+</VBox>

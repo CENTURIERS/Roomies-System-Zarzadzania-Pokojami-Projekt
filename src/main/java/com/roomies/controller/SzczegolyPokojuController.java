@@ -2,6 +2,7 @@ package com.roomies.controller;
 
 import com.roomies.dao.PokojDao;
 import com.roomies.model.Pokoj;
+import com.roomies.util.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -164,24 +165,40 @@ public class SzczegolyPokojuController {
         }
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/roomies/view/rezerwacja-pokoju-view.fxml"));
-            Parent root = loader.load();
+            FXMLLoader loader;
+            String fxmlPath;
 
-            RezerwacjaPokojuController dialogController = loader.getController();
-            dialogController.initData(this.wyswietlanyPokoj);
+            if (UserSession.getInstance().isUserLoggedIn()) {
+                fxmlPath = "/com/roomies/view/rezerwacja-zalogowany-view.fxml";
+                loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent root = loader.load();
+                RezerwacjaZalogowanyController dialogController = loader.getController();
+                dialogController.initData(this.wyswietlanyPokoj, this);
+                dialogController.initData(this.wyswietlanyPokoj, this);
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Rezerwacja Pokoju (Zalogowany): " + wyswietlanyPokoj.getNazwa());
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                Stage ownerStage = (Stage) rezerwujButton.getScene().getWindow();
+                dialogStage.initOwner(ownerStage);
+                Scene scene = new Scene(root);
+                dialogStage.setScene(scene);
+                dialogStage.showAndWait();
 
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Rezerwacja Pokoju: " + wyswietlanyPokoj.getNazwa());
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-
-            Stage ownerStage = (Stage) rezerwujButton.getScene().getWindow();
-            dialogStage.initOwner(ownerStage);
-
-            Scene scene = new Scene(root);
-            dialogStage.setScene(scene);
-
-            dialogStage.showAndWait();
-
+            } else {
+                fxmlPath = "/com/roomies/view/rezerwacja-pokoju-view.fxml";
+                loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent root = loader.load();
+                RezerwacjaPokojuController dialogController = loader.getController();
+                dialogController.initData(this.wyswietlanyPokoj, this);
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Rezerwacja Pokoju i Rejestracja: " + wyswietlanyPokoj.getNazwa());
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                Stage ownerStage = (Stage) rezerwujButton.getScene().getWindow();
+                dialogStage.initOwner(ownerStage);
+                Scene scene = new Scene(root);
+                dialogStage.setScene(scene);
+                dialogStage.showAndWait();
+            }
             odswiezWidokPokojuPoRezerwacji();
 
         } catch (IOException e) {

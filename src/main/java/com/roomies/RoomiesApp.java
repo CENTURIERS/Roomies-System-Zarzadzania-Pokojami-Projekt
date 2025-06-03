@@ -12,7 +12,7 @@ public class RoomiesApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(RoomiesApp.class.getResource("view/main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 940, 768);
+        Scene scene = new Scene(fxmlLoader.load(), 970, 768);
 
         MainController mainController = fxmlLoader.getController();
         mainController.setPrimaryStage(stage);

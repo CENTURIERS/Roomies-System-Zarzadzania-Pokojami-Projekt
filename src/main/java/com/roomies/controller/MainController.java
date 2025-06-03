@@ -7,6 +7,8 @@ import com.roomies.model.Klient;
 import com.roomies.model.Lokalizacja;
 import com.roomies.model.Pokoj;
 import com.roomies.model.RodzajPokoju;
+import com.roomies.util.UserSession;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +19,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.geometry.Insets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ public class MainController {
 
     @FXML
     private Button zalogujButton;
+    @FXML
+    private Button mojeKontoButton;
     @FXML
     private Accordion filtryAccordion;
     @FXML
@@ -67,7 +72,6 @@ public class MainController {
     private RodzajPokojuDao rodzajPokojuDao;
     private LokalizacjaDao lokalizacjaDao;
     private List<Pokoj> wszystkiePokojeZBazy;
-    private Klient zalogowanyKlient = null;
     private Stage primaryStage;
 
     @FXML
@@ -93,8 +97,10 @@ public class MainController {
         zastosujFiltryButton.setOnAction(event -> aplikujFiltry());
         wyczyscFiltryButton.setOnAction(event -> wyczyscFiltry());
         zalogujButton.setOnAction(event -> handleZalogujLubWylogujButton());
+        mojeKontoButton.setOnAction(event -> otworzPanelKonta());
 
         aplikujFiltry();
+        zaktualizujStatusZalogowania(UserSession.getInstance().getZalogowanyKlient());
     }
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -107,10 +113,10 @@ public class MainController {
 
     @FXML
     public void handleZalogujLubWylogujButton() {
-        if (zalogowanyKlient == null) {
+        if (!UserSession.getInstance().isUserLoggedIn()) {
             otworzOknoLogowania();
         } else {
-            zalogowanyKlient = null;
+            UserSession.getInstance().logoutUser();
             zaktualizujStatusZalogowania(null);
             pokazAlert(Alert.AlertType.INFORMATION, "Wylogowano", "Pomyślnie wylogowano z systemu.");
         }
@@ -127,7 +133,7 @@ public class MainController {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Logowanie");
             dialogStage.initModality(Modality.APPLICATION_MODAL);
-            if (this.primaryStage != null) {
+            if (this.primaryStage != null && this.primaryStage.isShowing()) {
                 dialogStage.initOwner(this.primaryStage);
             }
 
@@ -142,11 +148,52 @@ public class MainController {
     }
 
     public void zaktualizujStatusZalogowania(Klient klient) {
-        this.zalogowanyKlient = klient;
-        if (klient != null) {
+        if (klient != null && UserSession.getInstance().isUserLoggedIn()) {
             zalogujButton.setText("Wyloguj (" + klient.getImie() + ")");
+            mojeKontoButton.setVisible(true);
+            mojeKontoButton.setManaged(true);
         } else {
             zalogujButton.setText("Zaloguj");
+            mojeKontoButton.setVisible(false);
+            mojeKontoButton.setManaged(false);
+        }
+    }
+
+    private void otworzPanelKonta() {
+        if (!UserSession.getInstance().isUserLoggedIn()) {
+            pokazAlert(Alert.AlertType.WARNING, "Brak dostępu", "Musisz być zalogowany, aby przejść do panelu konta.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/roomies/view/panel-konta-view.fxml"));
+            Parent root = loader.load();
+
+            PanelKontaController controller = loader.getController();
+            Klient klient = UserSession.getInstance().getZalogowanyKlient();
+            if (klient != null) {
+                controller.initData(klient);
+            } else {
+                pokazAlert(Alert.AlertType.ERROR, "Błąd Sesji", "Błąd podczas pobierania danych zalogowanego użytkownika.");
+                return;
+            }
+
+            Stage panelKontaStage = new Stage();
+            panelKontaStage.setTitle("Moje Konto - " + klient.getImie() + " " + klient.getNazwisko());
+            panelKontaStage.initModality(Modality.WINDOW_MODAL);
+            if (this.primaryStage != null && this.primaryStage.isShowing()) {
+                panelKontaStage.initOwner(this.primaryStage);
+            }
+
+            Scene scene = new Scene(root);
+            panelKontaStage.setScene(scene);
+            panelKontaStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            pokazAlert(Alert.AlertType.ERROR, "Błąd Aplikacji", "Nie można otworzyć panelu konta: " + e.getMessage());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            pokazAlert(Alert.AlertType.ERROR, "Błąd Aplikacji", "Nie znaleziono pliku FXML dla panelu konta lub błąd kontrolera: " + e.getMessage());
         }
     }
 

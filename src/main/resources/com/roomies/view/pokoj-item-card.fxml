@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.StackPane?>
-<VBox fx:id="kartaPokojuKontener" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="210.0" spacing="5.0" styleClass="pokoj-karta" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.PokojItemController">
+<VBox fx:id="kartaPokojuKontener" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="210.0" spacing="5.0" styleClass="pokoj-karta" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.PokojItemController">
    <children>
       <StackPane VBox.vgrow="NEVER">
          <children>

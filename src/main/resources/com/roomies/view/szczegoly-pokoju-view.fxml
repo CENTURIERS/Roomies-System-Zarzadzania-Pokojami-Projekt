@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="szczegolyPokojuMainPane" prefHeight="550.0" prefWidth="850.0" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.SzczegolyPokojuController">
+<BorderPane fx:id="szczegolyPokojuMainPane" prefHeight="550.0" prefWidth="850.0" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.SzczegolyPokojuController">
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
@@ -24,7 +24,7 @@
         <HBox spacing="30.0" BorderPane.alignment="CENTER">
             <children>
                 <VBox alignment="TOP_CENTER" HBox.hgrow="NEVER" styleClass="image-container">
-                    <ImageView fx:id="zdjecieGlowne" fitHeight="350.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" styleClass="details-image-view"> <!-- Dodana styleClass -->
+                    <ImageView fx:id="zdjecieGlowne" fitHeight="350.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" styleClass="details-image-view">
                     </ImageView>
                 </VBox>
 

@@ -2,6 +2,7 @@ package com.roomies.controller;
 
 import com.roomies.dao.KlientDao;
 import com.roomies.model.Klient;
+import com.roomies.util.UserSession;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,6 +69,7 @@ public class LoginController {
             Klient klient = klientOptional.get();
             if (klient.getHaslo().equals(password)) {
                 if (klient.isCzyAktywny()) {
+                    UserSession.getInstance().loginUser(klient);
                     System.out.println("Zalogowano pomyślnie: " + klient.getEmail());
                     if (mainController != null) {
                         mainController.zaktualizujStatusZalogowania(klient);
