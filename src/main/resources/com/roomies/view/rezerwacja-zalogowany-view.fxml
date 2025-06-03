@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="rezerwacjaZalogowanyPane" alignment="TOP_CENTER" spacing="20.0" styleClass="dialog-pane" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.RezerwacjaZalogowanyController">
+    <padding>
+        <Insets bottom="25.0" left="30.0" right="30.0" top="25.0" />
+    </padding>
+    <children>
+        <Text text="Potwierdź Rezerwację" styleClass="dialog-title" textAlignment="CENTER" />
+
+        <Label fx:id="zalogowanyInfoLabel" style="-fx-font-size: 13px; -fx-text-fill: #3A4B63;" text="Zalogowano jako: [Imię Nazwisko]" textAlignment="CENTER" />
+
+        <VBox spacing="8.0" alignment="CENTER" style="-fx-padding: 10 0 15 0;">
+            <Label fx:id="nazwaPokojuLabelInfo" styleClass="form-value-bold" text="Rezerwujesz: [Nazwa Pokoju]" textAlignment="CENTER"/>
+            <Label fx:id="cenaZaDobeInfoLabel" styleClass="form-value" text="Cena: [Cena] / doba" textAlignment="CENTER" />
+        </VBox>
+
+        <Label text="Wybierz Okres Rezerwacji" styleClass="form-section-title" alignment="CENTER"/>
+
+        <GridPane hgap="10.0" vgap="10.0" styleClass="form-grid" alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="130.0" prefWidth="140.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="220.0"/>
+            </columnConstraints>
+
+            <Label styleClass="form-label" text="Data rozpoczęcia:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <DatePicker fx:id="dataRozpoczeciaPicker" styleClass="form-datepicker" prefWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Data zakończenia:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <DatePicker fx:id="dataZakonczeniaPicker" styleClass="form-datepicker" prefWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label" text="Liczba dni:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <Label fx:id="liczbaDniLabel" styleClass="form-value" text="-" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label styleClass="form-label-total" text="Całkowity koszt:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="calkowityKosztLabel" styleClass="form-total-price" text="0.00 zł" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        </GridPane>
+
+        <Label fx:id="errorLabel" styleClass="error-label" managed="false" visible="false" wrapText="true" maxWidth="Infinity"/>
+
+        <HBox alignment="CENTER" spacing="15.0" styleClass="dialog-buttons-hbox">
+            <Button fx:id="anulujButton" mnemonicParsing="false" onAction="#handleAnulujButton" styleClass="dialog-button-secondary" text="Anuluj" />
+            <Button fx:id="potwierdzRezerwacjeButton" mnemonicParsing="false" onAction="#handlePotwierdzRezerwacjeButton" styleClass="dialog-button-primary" text="Potwierdź Rezerwację" />
+        </HBox>
+    </children>
+</VBox>

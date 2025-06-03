@@ -34,7 +34,7 @@ public class Pokoj {
     @Column(name = "cena_za_dobe", nullable = false, precision = 10, scale = 2)
     private BigDecimal cenaZaDobe;
 
-    @Column(name = "sciezka_zdjecia", length = 255) // Może być null
+    @Column(name = "sciezka_zdjecia", length = 255)
     private String sciezkaZdjecia;
 
     public Pokoj() {

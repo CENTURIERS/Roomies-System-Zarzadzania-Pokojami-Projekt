@@ -8,6 +8,7 @@ import com.roomies.model.Klient;
 import com.roomies.model.Platnosc;
 import com.roomies.model.Pokoj;
 import com.roomies.model.Wynajem;
+import com.roomies.util.UserSession;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
 
 public class RezerwacjaPokojuController {
 
@@ -65,6 +67,7 @@ public class RezerwacjaPokojuController {
     private Button rezerwujZarejestrujButton;
 
     private Pokoj rezerwowanyPokoj;
+    private SzczegolyPokojuController szczegolyPokojuController;
 
     private KlientDao klientDao;
     private PokojDao pokojDao;
@@ -74,6 +77,7 @@ public class RezerwacjaPokojuController {
     private final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("pl", "PL"));
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
     private static final Pattern PESEL_PATTERN = Pattern.compile("^[0-9]{11}$");
+    private static final int MIN_PASSWORD_LENGTH = 6;
 
     @FXML
     public void initialize() {
@@ -90,10 +94,13 @@ public class RezerwacjaPokojuController {
 
         dataRozpoczeciaPicker.setValue(LocalDate.now());
         dataZakonczeniaPicker.setValue(LocalDate.now().plusDays(1));
+
+        wypelnijDaneKlientaJesliZalogowany();
     }
 
-    public void initData(Pokoj pokoj) {
+    public void initData(Pokoj pokoj, SzczegolyPokojuController szczegolyController) {
         this.rezerwowanyPokoj = pokoj;
+        this.szczegolyPokojuController = szczegolyController;
 
         if (rezerwowanyPokoj != null) {
             nazwaPokojuLabelInfo.setText("Rezerwujesz: " + rezerwowanyPokoj.getNazwa());
@@ -104,8 +111,57 @@ public class RezerwacjaPokojuController {
                 rezerwujZarejestrujButton.setDisable(true);
             }
         }
+        wypelnijDaneKlientaJesliZalogowany();
         przeliczKoszt();
     }
+
+    private void wypelnijDaneKlientaJesliZalogowany() {
+        Klient zalogowany = UserSession.getInstance().getZalogowanyKlient();
+        boolean jestZalogowany = UserSession.getInstance().isUserLoggedIn();
+
+        if (jestZalogowany && zalogowany != null) {
+            imieField.setText(zalogowany.getImie());
+            nazwiskoField.setText(zalogowany.getNazwisko());
+            emailField.setText(zalogowany.getEmail());
+            peselField.setText(zalogowany.getPesel());
+            ulicaField.setText(zalogowany.getUlica());
+            numerBudynkuField.setText(zalogowany.getNumerBudynku());
+            if (zalogowany.getTelefon() != null) {
+                telefonField.setText(zalogowany.getTelefon());
+            }
+
+            imieField.setDisable(true);
+            nazwiskoField.setDisable(true);
+            emailField.setDisable(true);
+            peselField.setDisable(true);
+            ulicaField.setDisable(true);
+            numerBudynkuField.setDisable(true);
+            telefonField.setDisable(true);
+
+            hasloField.clear();
+            hasloField.setDisable(true);
+            hasloField.getParent().setVisible(false);
+            hasloField.getParent().setManaged(false);
+
+            rezerwujZarejestrujButton.setText("Potwierdź Rezerwację");
+        } else {
+            imieField.setDisable(false);
+            nazwiskoField.setDisable(false);
+            emailField.setDisable(false);
+            peselField.setDisable(false);
+            ulicaField.setDisable(false);
+            numerBudynkuField.setDisable(false);
+            telefonField.setDisable(false);
+
+            hasloField.setDisable(false);
+            if(hasloField.getParent() != null){
+                hasloField.getParent().setVisible(true);
+                hasloField.getParent().setManaged(true);
+            }
+            rezerwujZarejestrujButton.setText("Rezerwuj i Utwórz Konto");
+        }
+    }
+
 
     private void przeliczKoszt() {
         LocalDate start = dataRozpoczeciaPicker.getValue();
@@ -158,34 +214,34 @@ public class RezerwacjaPokojuController {
     @FXML
     private void handleRezerwujZarejestrujButton(ActionEvent event) {
         ukryjBlad();
+        Klient klientDoRezerwacji;
 
-        String imie = imieField.getText().trim();
-        String nazwisko = nazwiskoField.getText().trim();
-        String email = emailField.getText().trim();
-        String haslo = hasloField.getText();
-        String telefon = telefonField.getText().trim();
-        String ulica = ulicaField.getText().trim();
-        String numerBudynku = numerBudynkuField.getText().trim();
-        String pesel = peselField.getText().trim();
         LocalDate dataRozpoczecia = dataRozpoczeciaPicker.getValue();
         LocalDate dataZakonczenia = dataZakonczeniaPicker.getValue();
 
-        if (!walidujDane(imie, nazwisko, email, haslo, ulica, numerBudynku, pesel, dataRozpoczecia, dataZakonczenia)) {
-            return;
-        }
+        if (UserSession.getInstance().isUserLoggedIn()) {
+            klientDoRezerwacji = UserSession.getInstance().getZalogowanyKlient();
+            if (!walidujDaty(dataRozpoczecia, dataZakonczenia)) return;
+        } else {
+            String imie = imieField.getText().trim();
+            String nazwisko = nazwiskoField.getText().trim();
+            String email = emailField.getText().trim().toLowerCase();
+            String haslo = hasloField.getText();
+            String telefon = telefonField.getText().trim();
+            String ulica = ulicaField.getText().trim();
+            String numerBudynku = numerBudynkuField.getText().trim();
+            String pesel = peselField.getText().trim();
 
-        Klient klientDoRezerwacji;
-        Optional<Klient> istniejacyKlientOptional = klientDao.findByEmail(email);
-
-        if (istniejacyKlientOptional.isPresent()) {
-            Klient istniejacyKlient = istniejacyKlientOptional.get();
-            if (!istniejacyKlient.getHaslo().equals(haslo)) {
-                pokazBlad("Konto o tym emailu już istnieje, ale podane hasło jest nieprawidłowe.");
+            if (!walidujDaneNowegoKlientaIDat(imie, nazwisko, email, haslo, ulica, numerBudynku, pesel, telefon, dataRozpoczecia, dataZakonczenia)) {
                 return;
             }
-            klientDoRezerwacji = istniejacyKlient;
-            System.out.println("Użyto istniejącego klienta: " + klientDoRezerwacji.getEmail());
-        } else {
+
+            Optional<Klient> istniejacyKlientOptional = klientDao.findByEmail(email);
+            if (istniejacyKlientOptional.isPresent()) {
+                pokazBlad("Konto o podanym adresie email już istnieje. Zaloguj się lub użyj innego adresu.");
+                return;
+            }
+
             Klient nowyKlient = new Klient();
             nowyKlient.setImie(imie);
             nowyKlient.setNazwisko(nazwisko);
@@ -206,6 +262,11 @@ public class RezerwacjaPokojuController {
                 pokazBlad("Błąd podczas tworzenia konta klienta: " + e.getMessage());
                 return;
             }
+        }
+
+        if (klientDoRezerwacji == null) {
+            pokazBlad("Błąd: Nie udało się ustalić danych klienta.");
+            return;
         }
 
         try {
@@ -232,6 +293,9 @@ public class RezerwacjaPokojuController {
                     "Pomyślnie zarezerwowano pokój " + rezerwowanyPokoj.getNazwa() + " dla " +
                             klientDoRezerwacji.getImie() + " " + klientDoRezerwacji.getNazwisko() + ".");
 
+            if (szczegolyPokojuController != null) {
+                szczegolyPokojuController.odswiezWidokPokojuPoRezerwacji();
+            }
             zamknijOkno();
 
         } catch (Exception e) {
@@ -240,28 +304,9 @@ public class RezerwacjaPokojuController {
         }
     }
 
-    private boolean walidujDane(String imie, String nazwisko, String email, String haslo,
-                                String ulica, String numerBudynku, String pesel,
-                                LocalDate dataRozpoczecia, LocalDate dataZakonczenia) {
-        if (imie.isEmpty() || nazwisko.isEmpty() || email.isEmpty() || haslo.isEmpty() ||
-                ulica.isEmpty() || numerBudynku.isEmpty() || pesel.isEmpty()) {
-            pokazBlad("Wszystkie pola (oprócz telefonu) są wymagane.");
-            return false;
-        }
-        if (!EMAIL_PATTERN.matcher(email).matches()) {
-            pokazBlad("Niepoprawny format adresu email.");
-            return false;
-        }
-        if (haslo.length() < 6) {
-            pokazBlad("Hasło musi mieć co najmniej 6 znaków.");
-            return false;
-        }
-        if (!PESEL_PATTERN.matcher(pesel).matches()) {
-            pokazBlad("PESEL musi składać się z 11 cyfr.");
-            return false;
-        }
+    private boolean walidujDaty(LocalDate dataRozpoczecia, LocalDate dataZakonczenia) {
         if (dataRozpoczecia == null || dataZakonczenia == null) {
-            pokazBlad("Proszę wybrać datę rozpoczęcia i zakończenia rezerwacji.");
+            pokazBlad("Proszę wybrać daty rezerwacji.");
             return false;
         }
         if (dataRozpoczecia.isBefore(LocalDate.now())) {
@@ -282,6 +327,38 @@ public class RezerwacjaPokojuController {
         }
         return true;
     }
+
+    private boolean walidujDaneNowegoKlientaIDat(String imie, String nazwisko, String email, String haslo,
+                                                 String ulica, String numerBudynku, String pesel, String telefon,
+                                                 LocalDate dataRozpoczecia, LocalDate dataZakonczenia) {
+        StringBuilder sb = new StringBuilder();
+        if (imie.isEmpty()) sb.append("Pole 'Imię' jest wymagane.\n");
+        if (nazwisko.isEmpty()) sb.append("Pole 'Nazwisko' jest wymagane.\n");
+        if (email.isEmpty()) {
+            sb.append("Pole 'Email' jest wymagane.\n");
+        } else if (!EMAIL_PATTERN.matcher(email).matches()) {
+            sb.append("Niepoprawny format adresu email.\n");
+        }
+        if (haslo.isEmpty()) {
+            sb.append("Pole 'Hasło' jest wymagane.\n");
+        } else if (haslo.length() < MIN_PASSWORD_LENGTH) {
+            sb.append("Hasło musi mieć co najmniej ").append(MIN_PASSWORD_LENGTH).append(" znaków.\n");
+        }
+        if (ulica.isEmpty()) sb.append("Pole 'Ulica' jest wymagane.\n");
+        if (numerBudynku.isEmpty()) sb.append("Pole 'Numer budynku' jest wymagane.\n");
+        if (pesel.isEmpty()) {
+            sb.append("Pole 'PESEL' jest wymagane.\n");
+        } else if (!PESEL_PATTERN.matcher(pesel).matches()) {
+            sb.append("PESEL musi składać się z 11 cyfr.\n");
+        }
+
+        if (sb.length() > 0) {
+            pokazBlad(sb.toString().trim());
+            return false;
+        }
+        return walidujDaty(dataRozpoczecia, dataZakonczenia);
+    }
+
 
     private void pokazBlad(String wiadomosc) {
         errorLabel.setText(wiadomosc);

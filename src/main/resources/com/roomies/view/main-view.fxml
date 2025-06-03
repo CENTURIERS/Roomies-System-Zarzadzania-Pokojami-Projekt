@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.FlowPane?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="713.0" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="713.0" stylesheets="@../../../css/css.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.MainController">
    <top>
       <HBox alignment="CENTER" styleClass="top-bar" BorderPane.alignment="CENTER">
          <children>
@@ -26,6 +26,11 @@
                </image>
             </ImageView>
             <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="mojeKontoButton" mnemonicParsing="false" text="Moje Konto" visible="false" managed="false">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="zalogujButton" mnemonicParsing="false" text="Zaloguj" />
          </children>
          <padding>

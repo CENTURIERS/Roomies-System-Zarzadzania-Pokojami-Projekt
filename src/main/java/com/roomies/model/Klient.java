@@ -136,6 +136,10 @@ public class Klient {
         this.numerBudynku = numerBudynku;
     }
 
+    public String getNumerBudynku() {
+        return numerBudynku;
+    }
+
     public String getHaslo() {
         return haslo;
     }

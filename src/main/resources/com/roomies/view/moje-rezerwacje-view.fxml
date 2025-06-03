@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<VBox styleClass="details-info-pane" spacing="15.0" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.MojeRezerwacjeController">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+    </padding>
+    <children>
+        <Label text="Moje Rezerwacje" styleClass="form-section-title" maxWidth="Infinity"/>
+        <TableView fx:id="rezerwacjeTableView" styleClass="konto-rezerwacje-tableview" VBox.vgrow="ALWAYS" prefHeight="400.0">
+            <columns>
+                <TableColumn fx:id="pokojColumn" text="Pokój" prefWidth="220.0" styleClass="pokoj-column"/>
+                <TableColumn fx:id="dataOdColumn" text="Data od" prefWidth="110.0" styleClass="data-column"/>
+                <TableColumn fx:id="dataDoColumn" text="Data do" prefWidth="110.0" styleClass="data-column"/>
+                <TableColumn fx:id="kosztColumn" text="Koszt" prefWidth="110.0" styleClass="koszt-column"/>
+                <TableColumn fx:id="statusPlatnosciColumn" text="Status Płatności" prefWidth="150.0" styleClass="status-column"/>
+            </columns>
+        </TableView>
+    </children>
+</VBox>
