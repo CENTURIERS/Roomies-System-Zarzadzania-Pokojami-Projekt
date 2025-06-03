@@ -1,5 +1,6 @@
 Aby projekt działał poprawnie należy stworzyc oraz zaimportować rekordy używając tych zapytań SQL.
 Najlepszy efekt otrzymamy uzywajac pgAdmin(postgreSQL);
+W plikach takze znajduje się plik sql do importu bazy.
 
 CREATE DATABASE roomiesdb;
 
