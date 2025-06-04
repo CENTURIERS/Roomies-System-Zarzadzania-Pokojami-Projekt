@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,29 +22,23 @@ import java.util.Locale;
 public class PokojItemController {
     @FXML
     private VBox kartaPokojuKontener;
-
     @FXML
     private ImageView zdjeciePokojuImageView;
-
     @FXML
     private Label nazwaPokojuLabel;
-
     @FXML
     private Label rodzajPokojuLabel;
-
     @FXML
     private Label lokalizacjaPokojuLabel;
-
     @FXML
     private Label cenaPokojuLabel;
-
     @FXML
     private Label dostepnoscLabel;
-
     @FXML
     private Button zobaczSzczegolyButton;
 
     private Pokoj pokojObiekt;
+    private MainController mainControllerRef;
 
     public void setData(Pokoj pokoj){
         this.pokojObiekt = pokoj;
@@ -91,14 +86,11 @@ public class PokojItemController {
                 if (is != null) {
                     imageToSet = new Image(is);
                     if (imageToSet.isError()) {
-                        System.out.println("Błąd w pliku obrazka (uszkodzony lub nieprawidłowy format): " + sciezkaDoZdjeciaZBazy);
                         imageToSet = null;
                     }
-                } else {
-                    System.out.println("Nie znaleziono zasobu obrazka na ścieżce: " + sciezkaDoZdjeciaZBazy);
                 }
             } catch (Exception e) {
-                System.out.println("Wyjątek podczas ładowania obrazka " + sciezkaDoZdjeciaZBazy + ": " + e.getMessage());
+
             }
         }
 
@@ -106,14 +98,16 @@ public class PokojItemController {
             try (InputStream is = getClass().getResourceAsStream("/images/placeholder_400x300.png")) {
                 if (is != null) {
                     imageToSet = new Image(is);
-                } else {
-                    System.out.println("KRYTYCZNY BŁĄD: Nie znaleziono domyślnego obrazka placeholder: " + "/images/placeholder_400x300.png");
                 }
             } catch (Exception e) {
-                System.out.println("Błąd podczas ładowania domyślnego obrazka placeholder: " + e.getMessage());
+
             }
         }
         zdjeciePokojuImageView.setImage(imageToSet);
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainControllerRef = mainController;
     }
 
     @FXML
@@ -126,22 +120,16 @@ public class PokojItemController {
     @FXML
     private void handleZobaczSzczegoly() {
         if (pokojObiekt == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Brak danych");
-            alert.setHeaderText(null);
-            alert.setContentText("Nie można wyświetlić szczegółów, brak danych pokoju.");
-            alert.showAndWait();
+            pokazAlert("Brak danych", null, "Nie można wyświetlić szczegółów, brak danych pokoju.", Alert.AlertType.WARNING);
             return;
         }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/roomies/view/szczegoly-pokoju-view.fxml"));
-
             Parent root = loader.load();
-
             SzczegolyPokojuController szczgolyController = loader.getController();
+
             if (szczgolyController == null) {
-                System.out.println("KRYTYCZNY BŁĄD: Nie udało się pobrać kontrolera dla szczegoly-pokoju-view.fxml");
                 pokazAlert("Błąd Aplikacji", "Błąd Wewnętrzny", "Nie można załadować komponentów okna szczegółów.", Alert.AlertType.ERROR);
                 return;
             }
@@ -149,16 +137,22 @@ public class PokojItemController {
             szczgolyController.wyswietlSzczegoly(this.pokojObiekt);
 
             Stage detailsStage = new Stage();
+            detailsStage.initModality(Modality.WINDOW_MODAL);
+            Stage owner = (Stage) zobaczSzczegolyButton.getScene().getWindow();
+            if (owner != null) {
+                detailsStage.initOwner(owner);
+            }
             detailsStage.setTitle("Szczegoly Pokoju - " + (pokojObiekt.getNazwa() != null ? pokojObiekt.getNazwa() : ""));
             detailsStage.setScene(new Scene(root));
-            detailsStage.show();
+            detailsStage.showAndWait();
+
+            if (mainControllerRef != null) {
+                mainControllerRef.odswiezWszystkiePokojeNaKartach();
+            }
+
         }catch (IOException e){
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Błąd aplikacji");
-            alert.setHeaderText(null);
-            alert.setContentText("Nie można otworzyć okna ze szczegółami pokoju");
-            alert.showAndWait();
+            pokazAlert("Błąd aplikacji", null, "Nie można otworzyć okna ze szczegółami pokoju", Alert.AlertType.ERROR);
         }
     }
 

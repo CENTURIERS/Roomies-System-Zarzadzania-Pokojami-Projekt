@@ -119,6 +119,7 @@ public class MainController {
             UserSession.getInstance().logoutUser();
             zaktualizujStatusZalogowania(null);
             pokazAlert(Alert.AlertType.INFORMATION, "Wylogowano", "Pomyślnie wylogowano z systemu.");
+            odswiezWszystkiePokojeNaKartach();
         }
     }
 
@@ -187,6 +188,7 @@ public class MainController {
             Scene scene = new Scene(root);
             panelKontaStage.setScene(scene);
             panelKontaStage.showAndWait();
+            odswiezWszystkiePokojeNaKartach();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -326,6 +328,7 @@ public class MainController {
                 PokojItemController itemController = loader.getController();
                 if (itemController != null) {
                     itemController.setData(pokoj);
+                    itemController.setMainController(this);
                     glownaZawartoscFlowPane.getChildren().add(kartaPokojuNode);
                 } else {
                     System.err.println("BŁĄD KRYTYCZNY KONTROLERA: PokojItemController nie został zainicjowany dla pokoju ID: " + (pokoj != null ? pokoj.getId_pokoju() : "null"));
@@ -345,6 +348,20 @@ public class MainController {
         if(radioRodzajWszystkie != null) radioRodzajWszystkie.setSelected(true);
         for (CheckBox cb : dynamiczneLokalizacjeCheckBoxes) {
             cb.setSelected(false);
+        }
+        aplikujFiltry();
+    }
+
+    public void odswiezWszystkiePokojeNaKartach() {
+        try {
+            wszystkiePokojeZBazy = pokojDao.findAll();
+            if (wszystkiePokojeZBazy == null) {
+                wszystkiePokojeZBazy = new ArrayList<>();
+            }
+        } catch (Exception e) {
+            wszystkiePokojeZBazy = new ArrayList<>();
+            pokazAlert(Alert.AlertType.ERROR, "Błąd krytyczny", "Nie udało się załadować danych pokoi z bazy przy odświeżaniu.");
+            e.printStackTrace();
         }
         aplikujFiltry();
     }

@@ -3,7 +3,6 @@ package com.roomies.controller;
 import com.roomies.dao.PokojDao;
 import com.roomies.model.Pokoj;
 import com.roomies.util.UserSession;
-import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,45 +19,30 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 public class SzczegolyPokojuController {
-    //    === OGOLNE ===
     @FXML
     private BorderPane szczegolyPokojuMainPane;
-
-    //    === TOP ===
     @FXML
     private Label nazwaPokojuLabel;
-
-    //    === CENTER ===
     @FXML
     private ImageView zdjecieGlowne;
-
     @FXML
     private Label rodzajLabel;
-
     @FXML
     private Label lokalizacjaLabel;
-
     @FXML
     private Label metrazLabel;
-
     @FXML
     private Label wyposazenieLabel;
-
     @FXML
     private Label cenaLabel;
-
     @FXML
     private Label dostepnoscLabel;
-
     @FXML
     private Button rezerwujButton;
-
     @FXML
     private Button zamknijButton;
 
@@ -70,6 +54,9 @@ public class SzczegolyPokojuController {
     public void initialize() {
         if (rezerwujButton != null) {
             rezerwujButton.setOnAction(event -> handleRezerwujButton());
+        }
+        if (zamknijButton != null) {
+            zamknijButton.setOnAction(event -> handleZamknijOkno());
         }
     }
 
@@ -84,7 +71,7 @@ public class SzczegolyPokojuController {
             cenaLabel.setText("Cena: -");
             dostepnoscLabel.setText("Dostepnosc: -");
             if(zdjecieGlowne != null) zdjecieGlowne.setImage(null);
-            if(rezerwujButton != null) rezerwujButton.setDisable(false);
+            if(rezerwujButton != null) rezerwujButton.setDisable(true);
             return;
         }
 
@@ -130,18 +117,17 @@ public class SzczegolyPokojuController {
             try (InputStream is = getClass().getResourceAsStream(sciezkaDoZdjeciaZBazy)) {
                 if (is != null) imageToSet = new Image(is);
                 if (imageToSet != null && imageToSet.isError()) {
-                    System.out.println("Błąd w pliku obrazka: " + sciezkaDoZdjeciaZBazy);
                     imageToSet = null;
                 }
             } catch (Exception e) {
-                System.out.println("Błąd ładowania zdjęcia: " + sciezkaDoZdjeciaZBazy + " - " + e.getMessage());
+
             }
         }
         if (imageToSet == null) {
             try (InputStream is = getClass().getResourceAsStream(DEFAULT_IMAGE_PATH)) {
                 if (is != null) imageToSet = new Image(is);
             } catch (Exception e) {
-                System.out.println("Błąd ładowania placeholdera.");
+             
             }
         }
         if (zdjecieGlowne != null) zdjecieGlowne.setImage(imageToSet);
@@ -153,11 +139,6 @@ public class SzczegolyPokojuController {
         if(stage != null) {
             stage.close();
         }
-        PokojDao pokojDao = new PokojDao();
-        List<Pokoj> wszystkiePokoje = new ArrayList<>();
-        wszystkiePokoje = pokojDao.findAll();
-        MainController mc = new MainController();
-        mc.wyswietlPokojeNaKartach(wszystkiePokoje);
     }
 
     @FXML
@@ -175,6 +156,10 @@ public class SzczegolyPokojuController {
         try {
             FXMLLoader loader;
             String fxmlPath;
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Stage ownerStage = (Stage) rezerwujButton.getScene().getWindow();
+            dialogStage.initOwner(ownerStage);
 
             if (UserSession.getInstance().isUserLoggedIn()) {
                 fxmlPath = "/com/roomies/view/rezerwacja-zalogowany-view.fxml";
@@ -182,31 +167,20 @@ public class SzczegolyPokojuController {
                 Parent root = loader.load();
                 RezerwacjaZalogowanyController dialogController = loader.getController();
                 dialogController.initData(this.wyswietlanyPokoj, this);
-                dialogController.initData(this.wyswietlanyPokoj, this);
-                Stage dialogStage = new Stage();
                 dialogStage.setTitle("Rezerwacja Pokoju (Zalogowany): " + wyswietlanyPokoj.getNazwa());
-                dialogStage.initModality(Modality.WINDOW_MODAL);
-                Stage ownerStage = (Stage) rezerwujButton.getScene().getWindow();
-                dialogStage.initOwner(ownerStage);
                 Scene scene = new Scene(root);
                 dialogStage.setScene(scene);
-                dialogStage.showAndWait();
-
             } else {
                 fxmlPath = "/com/roomies/view/rezerwacja-pokoju-view.fxml";
                 loader = new FXMLLoader(getClass().getResource(fxmlPath));
                 Parent root = loader.load();
                 RezerwacjaPokojuController dialogController = loader.getController();
                 dialogController.initData(this.wyswietlanyPokoj, this);
-                Stage dialogStage = new Stage();
                 dialogStage.setTitle("Rezerwacja Pokoju i Rejestracja: " + wyswietlanyPokoj.getNazwa());
-                dialogStage.initModality(Modality.WINDOW_MODAL);
-                Stage ownerStage = (Stage) rezerwujButton.getScene().getWindow();
-                dialogStage.initOwner(ownerStage);
                 Scene scene = new Scene(root);
                 dialogStage.setScene(scene);
-                dialogStage.showAndWait();
             }
+            dialogStage.showAndWait();
             odswiezWidokPokojuPoRezerwacji();
 
         } catch (IOException e) {

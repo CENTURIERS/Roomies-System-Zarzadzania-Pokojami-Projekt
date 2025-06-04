@@ -26,7 +26,7 @@ public class Wynajem {
     @Column(name = "data_zakoczenia")
     private LocalDate dataZakoczenia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_platnosci")
     private Platnosc platnosc;
 

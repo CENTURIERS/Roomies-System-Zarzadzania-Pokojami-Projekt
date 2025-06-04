@@ -509,19 +509,6 @@
     -fx-padding: 2px 0 5px 0;
 }
 
-.error-label {
-    -fx-text-fill: #D32F2F;
-    -fx-font-size: 12.5px;
-    -fx-font-weight: bold;
-    -fx-padding: 8px 0;
-    -fx-alignment: center;
-    -fx-background-color: rgba(211, 47, 47, 0.1);
-    -fx-border-color: rgba(211, 47, 47, 0.3);
-    -fx-border-width: 1px;
-    -fx-border-radius: 4px;
-    -fx-background-radius: 4px;
-}
-
 .dialog-buttons-hbox {
     -fx-padding-top: 25px;
     -fx-alignment: center;
@@ -727,3 +714,136 @@
 .status-oczekujaca { -fx-text-fill: #fd7e14; -fx-font-weight: bold;}
 .status-zaplacona { -fx-text-fill: #28a745; -fx-font-weight: bold;}
 .status-anulowana { -fx-text-fill: #6c757d; -fx-font-style: italic;}
+.status-inna { -fx-text-fill: #17a2b8; } /* Dodany styl dla innych statusów */
+
+
+#edycjaBox {
+    -fx-padding: 10px 0px 15px 0px;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-spacing: 10px;
+}
+
+#edycjaBox .label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #5A677A;
+}
+
+#edycjaBox .label-tytul-edycji {
+    -fx-font-size: 13.5px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #2c3e50;
+    -fx-padding-bottom: 5px;
+}
+
+.data-rozpoczecia-moje-rezerwacje,
+.data-zakonczenia-moje-rezerwacje {
+    -fx-font-size: 13px;
+    -fx-pref-height: 36px;
+    -fx-border-color: #CFD8DC;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: white;
+    -fx-prompt-text-fill: #90A4AE;
+    -fx-pref-width: 150px;
+}
+.data-rozpoczecia-moje-rezerwacje:focused,
+.data-zakonczenia-moje-rezerwacje:focused {
+    -fx-border-color: #B58A5F;
+    -fx-background-color: #fffbf5;
+    -fx-effect: dropshadow(three-pass-box, rgba(181, 138, 95, 0.35), 8, 0, 0, 0);
+}
+.data-rozpoczecia-moje-rezerwacje:disabled .text-field,
+.data-zakonczenia-moje-rezerwacje:disabled .text-field {
+    -fx-opacity: 0.7;
+    -fx-background-color: #e9ecef;
+}
+
+#kosztEdycjiLabel {
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+    -fx-text-fill: #555555;
+    -fx-padding: 5px 0 0 0;
+}
+
+.moje-rezerwacje-button {
+    -fx-font-size: 13px;
+    -fx-pref-height: 34px;
+    -fx-background-radius: 5px;
+    -fx-padding: 6px 12px;
+    -fx-font-family: "Segoe UI Semibold", Arial, sans-serif;
+    -fx-border-width: 1.5px;
+}
+
+.zapisz-button-rezerwacje {
+    -fx-style: ".moje-rezerwacje-button;";
+    -fx-background-color: linear-gradient(to bottom, derive(#B58A5F, 20%), derive(#B58A5F, -15%));
+    -fx-text-fill: white;
+    -fx-border-color: derive(#B58A5F, -30%);
+}
+.zapisz-button-rezerwacje:hover {
+    -fx-background-color: linear-gradient(to bottom, derive(#B58A5F, 25%), derive(#B58A5F, -10%));
+}
+.zapisz-button-rezerwacje:disabled {
+    -fx-opacity: 0.6;
+}
+
+.anuluj-button-rezerwacje {
+    -fx-style: ".moje-rezerwacje-button;";
+    -fx-background-color: #f4f6f8;
+    -fx-text-fill: #5A677A;
+    -fx-border-color: #D1D9E1;
+}
+.anuluj-button-rezerwacje:hover {
+    -fx-background-color: #e9edf1;
+    -fx-border-color: #BCC8D4;
+}
+.anuluj-button-rezerwacje:disabled {
+    -fx-opacity: 0.6;
+}
+
+.edytuj-button-rezerwacje {
+    -fx-style: ".moje-rezerwacje-button;";
+    -fx-background-color: linear-gradient(to bottom, derive(#B58A5F, 15%), derive(#B58A5F, -10%));
+    -fx-text-fill: white;
+    -fx-border-color: derive(#B58A5F, -25%);
+}
+.edytuj-button-rezerwacje:hover {
+    -fx-background-color: linear-gradient(to bottom, derive(#B58A5F, 10%), derive(#B58A5F, -15%));
+}
+.edytuj-button-rezerwacje:disabled {
+    -fx-opacity: 0.6;
+}
+
+.usun-button-rezerwacje {
+    -fx-style: ".moje-rezerwacje-button;";
+    -fx-background-color: #E53E3E;
+    -fx-text-fill: white;
+    -fx-border-color: derive(#E53E3E, -20%);
+}
+.usun-button-rezerwacje:hover {
+    -fx-background-color: derive(#E53E3E, -10%);
+}
+.usun-button-rezerwacje:disabled {
+    -fx-opacity: 0.6;
+}
+
+.error-label {
+    -fx-text-fill: #D32F2F;
+    -fx-font-size: 12.5px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+    -fx-background-color: rgba(229, 62, 62, 0.1);
+    -fx-border-color: rgba(229, 62, 62, 0.3);
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-min-height: 30px;
+}
+
+.separator .line {
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1px;
+}

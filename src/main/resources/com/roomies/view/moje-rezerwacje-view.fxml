@@ -1,25 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Separator?>
 
-<VBox styleClass="details-info-pane" spacing="15.0" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.MojeRezerwacjeController">
+<VBox alignment="TOP_CENTER" spacing="15.0" styleClass="details-info-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.roomies.controller.MojeRezerwacjeController">
     <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <children>
-        <Label text="Moje Rezerwacje" styleClass="form-section-title" maxWidth="Infinity"/>
-        <TableView fx:id="rezerwacjeTableView" styleClass="konto-rezerwacje-tableview" VBox.vgrow="ALWAYS" prefHeight="400.0">
+        <Label maxWidth="Infinity" styleClass="form-section-title" text="Moje Rezerwacje" />
+        <TableView fx:id="rezerwacjeTableView" prefHeight="350.0" styleClass="konto-rezerwacje-tableview" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="pokojColumn" text="Pokój" prefWidth="220.0" styleClass="pokoj-column"/>
-                <TableColumn fx:id="dataOdColumn" text="Data od" prefWidth="110.0" styleClass="data-column"/>
-                <TableColumn fx:id="dataDoColumn" text="Data do" prefWidth="110.0" styleClass="data-column"/>
-                <TableColumn fx:id="kosztColumn" text="Koszt" prefWidth="110.0" styleClass="koszt-column"/>
-                <TableColumn fx:id="statusPlatnosciColumn" text="Status Płatności" prefWidth="150.0" styleClass="status-column"/>
+                <TableColumn fx:id="pokojColumn" prefWidth="220.0" styleClass="pokoj-column" text="Pokój" />
+                <TableColumn fx:id="dataOdColumn" prefWidth="110.0" styleClass="data-column" text="Data od" />
+                <TableColumn fx:id="dataDoColumn" prefWidth="110.0" styleClass="data-column" text="Data do" />
+                <TableColumn fx:id="kosztColumn" prefWidth="110.0" styleClass="koszt-column" text="Koszt" />
+                <TableColumn fx:id="statusPlatnosciColumn" prefWidth="150.0" styleClass="status-column" text="Status Płatności" />
             </columns>
         </TableView>
+
+        <Separator prefWidth="200.0">
+            <VBox.margin>
+                <Insets top="5.0" bottom="5.0" />
+            </VBox.margin>
+        </Separator>
+
+        <VBox fx:id="edycjaBox" spacing="10.0">
+            <children>
+                <Label text="Edytuj wybraną rezerwację (jeśli dostępna):" styleClass="label-tytul-edycji"/>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label text="Nowa data od:" />
+                        <DatePicker fx:id="dataRozpoczeciaDatePicker" styleClass="data-rozpoczecia-moje-rezerwacje" promptText="Data rozpoczęcia" disable="true"/>
+                        <Label text="Nowa data do:" />
+                        <DatePicker fx:id="dataZakonczeniaDatePicker" styleClass="data-zakonczenia-moje-rezerwacje" promptText="Data zakończenia" disable="true"/>
+                    </children>
+                </HBox>
+                <Label fx:id="kosztEdycjiLabel" text="Nowy koszt: -" style="-fx-font-style: italic;"/>
+            </children>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <children>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="zapiszEdycjeButton" mnemonicParsing="false" text="Zapisz zmiany" styleClass="zapisz-button-rezerwacje" disable="true"/>
+                <Button fx:id="anulujEdycjeButton" mnemonicParsing="false" text="Anuluj edycję" styleClass="anuluj-button-rezerwacje" disable="true"/>
+                <Button fx:id="edytujButton" mnemonicParsing="false" styleClass="edytuj-button-rezerwacje" text="Rozpocznij edycję" onAction="#handleEdytujButton" disable="true"/>
+                <Button fx:id="usunButton" mnemonicParsing="false" styleClass="usun-button-rezerwacje" text="Usuń rezerwację" onAction="#handleUsunButton" disable="true"/>
+            </children>
+        </HBox>
+        <Label fx:id="errorLabel" styleClass="error-label" managed="false" visible="false" wrapText="true" maxWidth="Infinity"/>
     </children>
 </VBox>
